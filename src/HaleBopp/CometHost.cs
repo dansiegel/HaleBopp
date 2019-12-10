@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using Comet;
 using DryIoc;
 using HaleBopp.Common;
+using HaleBopp.Ioc;
 using HaleBopp.Logging;
 using HaleBopp.Navigation;
 using HaleBopp.Views;
@@ -13,9 +13,8 @@ namespace HaleBopp
 {
     public static class CometHost
     {
-        private static Lazy<IContainer> _lazyContainer = new Lazy<IContainer>(InitializeContainer);
         private static IContainer _container;
-        public static IContainer Container => _container ?? (_container = _lazyContainer.Value);
+        public static IContainer Container => _container ?? (_container = InitializeContainer());
 
         private static IContainer InitializeContainer()
         {
@@ -42,6 +41,15 @@ namespace HaleBopp
             container.Register<ILogger, NullLogger>();
         }
 
+        private static void AutoRegisterViews(IContainer container)
+        {
+            var viewTypes = RegistrationSolver.GetViews();
+            foreach (var viewType in viewTypes)
+            {
+                container.RegisterForNavigation(viewType);
+            }
+        }
+
         public static void Start<TApp>(IRootNavigationController controller, string uri, IParameters parameters = null)
             where TApp : ICometApp =>
             Start<TApp>(controller, UriParsingHelper.Parse(uri), parameters);
@@ -52,6 +60,10 @@ namespace HaleBopp
             Container.UseInstance<IRootNavigationController>(controller);
             var app = Container.Resolve<TApp>();
             app.RegisterServices(Container);
+            if(app is IAutoRegisterViews)
+            {
+                AutoRegisterViews(Container);
+            }
             var scope = Container.OpenScope();
             var navService = scope.Resolve<INavigationService>();
             navService.Navigate(uri, parameters, OnInitialNavigationResult);
