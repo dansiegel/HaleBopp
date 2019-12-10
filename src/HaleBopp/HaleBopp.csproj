@@ -1,0 +1,20 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras/2.0.54">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;xamarin.ios10;monoandroid81</TargetFrameworks>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Clancey.Comet" Version="0.1.7606-beta" />
+    <PackageReference Include="Clancey.Comet.Reload" Version="0.0.9-alpha" PrivateAssets="all" />
+    <PackageReference Include="DryIoc.dll" Version="4.0.7" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) ">
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.1" PrivateAssets="all" />
+    <PackageReference Include="Xamarin.Android.Support.v7.RecyclerView" Version="28.0.0.1" PrivateAssets="all" />
+    <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.1" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

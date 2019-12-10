@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Clancey.Comet" Version="0.1.7606-beta" />
+    <PackageReference Include="Clancey.Comet.Reload" Version="0.0.9-alpha" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\HaleBopp\HaleBopp.csproj" />
+  </ItemGroup>
+
+</Project>
