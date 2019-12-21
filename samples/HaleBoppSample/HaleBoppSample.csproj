@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Clancey.Comet" Version="0.1.7606-beta" />
-    <PackageReference Include="Clancey.Comet.Reload" Version="0.0.9-alpha" />
+    <PackageReference Include="Clancey.Comet.Reload" Version="0.0.11-alpha" />
   </ItemGroup>
 
   <ItemGroup>

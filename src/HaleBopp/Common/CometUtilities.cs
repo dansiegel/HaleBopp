@@ -17,13 +17,18 @@ namespace HaleBopp.Common
             var viewType = view.GetType();
             if (Mappings.ContainsKey(viewType)) return;
 
-            var fields = CheckForStateAttributes(viewType);
+            var fields = viewType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
+                                 .Where(x => x.IsInjectable() && x.GetValue(view) is null);
+
+            //var fields = CheckForStateAttributes(viewType);
             var mappings = fields.Where(x => x.GetValue(view) is null);
             Mappings[viewType] = mappings;
         }
 
         public static IEnumerable<object> GetViewStateObjects(View view)
         {
+            var viewType = view.GetType();
+            
             var fields = CheckForStateAttributes(view.GetType()).ToList();
             foreach(var field in fields)
             {

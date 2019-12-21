@@ -6,15 +6,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Clancey.Comet" Version="0.1.7606-beta" />
-    <PackageReference Include="Clancey.Comet.Reload" Version="0.0.9-alpha" PrivateAssets="all" />
+    <Compile Remove="Platform\**\*.cs" />
+    <None Include="Platform\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('xamarin.ios')) ">
+    <Compile Include="Platform\HaleBoppApplicationDelegate.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) ">
+    <Compile Include="Platform\HaleBoppActivity.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Clancey.Comet" Version="0.2.204-beta" />
+    <PackageReference Include="Clancey.Comet.Reload" Version="0.0.11-alpha" PrivateAssets="all" />
     <PackageReference Include="DryIoc.dll" Version="4.0.7" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) ">
-    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.1" PrivateAssets="all" />
-    <PackageReference Include="Xamarin.Android.Support.v7.RecyclerView" Version="28.0.0.1" PrivateAssets="all" />
-    <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.1" PrivateAssets="all" />
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.3" PrivateAssets="all" />
+    <PackageReference Include="Xamarin.Android.Support.v7.RecyclerView" Version="28.0. 0.3" PrivateAssets="all" />
+    <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>

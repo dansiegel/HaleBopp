@@ -10,6 +10,7 @@ namespace HaleBoppSample
         public void RegisterServices(IContainer container)
         {
             container.RegisterForNavigation<ViewA>();
+            container.RegisterForNavigation<ViewB>();
         }
     }
 }

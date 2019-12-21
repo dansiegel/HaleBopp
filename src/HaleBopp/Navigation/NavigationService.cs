@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Comet;
 using DryIoc;
@@ -25,9 +26,14 @@ namespace HaleBopp.Navigation
 
         private View CreateViewFor(string name)
         {
+            if (!_container.IsRegistered<View>(name))
+                throw new NavigationException(NavigationException.ViewIsNotRegistered);
+
             return _container.Resolve<View>(name);
         }
 
+        [SuppressMessage("Potential Code Quality Issues",
+            "RECS0165:Asynchronous methods should return a Task instead of void")]
         public async void Navigate(Uri uri, IParameters parameters, Action<NavigationResult> callback)
         {
             try

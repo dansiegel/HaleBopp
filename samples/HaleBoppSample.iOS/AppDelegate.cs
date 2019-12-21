@@ -5,17 +5,15 @@ using HaleBopp.Platform;
 namespace HaleBoppSample.iOS
 {
     [Register("AppDelegate")]
-    public class AppDelegate : UIApplicationDelegate
+    public class AppDelegate : HaleBoppApplicationDelegate
     {
-        public override UIWindow Window { get; set; }
-
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
 #if DEBUG
             Comet.Reload.Init();
 #endif
 
-            Window = AppleHost.Start<CometApp>("ViewA");
+            Start<CometApp>("ViewA");
             return true;
         }
     }

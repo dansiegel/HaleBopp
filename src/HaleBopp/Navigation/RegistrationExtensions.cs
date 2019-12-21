@@ -10,19 +10,14 @@ namespace HaleBopp
     public static class RegistrationExtensions
     {
         public static IContainer RegisterForNavigation<TView>(this IContainer container, string name = null)
-            where TView : View
+            where TView : View =>
+            container.RegisterForNavigation(typeof(TView), name);
+
+        internal static IContainer RegisterForNavigation(this IContainer container, Type viewType, string name = null)
         {
             if(string.IsNullOrEmpty(name))
             {
-                name = typeof(TView).Name;
-            }
-
-            var viewType = typeof(TView);
-            var stateFields = CometUtilities.GetStatePropertiesAndFields(container, viewType).ToArray();
-
-            if(stateFields.Length == 0)
-            {
-                throw new InvalidOperationException($"Your view '{viewType.Name}' must declare at least one property with the State Attribute.");
+                name = viewType.Name;
             }
 
             container.RegisterDelegate<View>(r => ConstructView(r, viewType),
@@ -47,8 +42,6 @@ namespace HaleBopp
 
             var stateFieldNames = CometUtilities.CheckForStateAttributes(viewType).Select(x => x.Name).ToArray();
             scope.InjectPropertiesAndFields(view, stateFieldNames);
-            scope.Dispose();
-            scope = null;
             return view;
         }
     }
